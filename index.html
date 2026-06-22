@@ -152,6 +152,17 @@ body.editing .editnote{display:block;animation:fade .3s}
 hr.div{border:0;border-top:1px solid var(--linea);margin:26px 0}
 .severity{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:20px}
 .sev-alta{background:#F6DAD0;color:#9a3a22}.sev-media{background:#F6E7CB;color:#8a6a22}.sev-baja{background:#E2EBD6;color:#566b3a}
+
+/* GANTT STYLES 45 DÍAS */
+.gantt-container { overflow-x: auto; margin-bottom: 24px; background: #fff; border: 1px solid var(--linea); border-radius: 14px; padding: 16px; box-shadow: var(--sombra-s);}
+.gantt { display: grid; grid-template-columns: 160px repeat(45, minmax(22px, 1fr)); gap: 4px; font-size: 11px; }
+.gantt-hdr { font-family: 'Jost'; font-weight: 600; text-align: center; color: var(--marron2); padding-bottom: 6px; padding-top: 6px;}
+.gantt-hdr-first { text-align: left; align-self: center;}
+.gantt-phase { display:flex; align-items:center; justify-content:center; font-weight: 700; color: var(--marron); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border-bottom: 1px solid var(--linea); border-right: 1px solid var(--linea); padding: 4px; }
+.gantt-phase:last-child { border-right: none;}
+.gantt-row-lbl { font-family: 'Jost'; font-weight: 600; padding-right: 12px; align-self: center; color: var(--marron); font-size: 12px; border-right: 1px solid var(--linea); line-height: 1.2;}
+.gantt-bar { border-radius: 6px; color: #fff; text-align: center; font-size: 10px; font-weight: 600; padding: 5px 4px; display:flex; align-items:center; justify-content:center; white-space:nowrap; overflow:hidden; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); margin-top: 2px; margin-bottom: 2px; cursor: pointer; transition: transform 0.15s;}
+.gantt-bar:hover { transform: scale(1.02); filter: brightness(1.1); }
 </style>
 </head>
 <body>
@@ -233,11 +244,9 @@ const WEB_ISSUES=[
 ];
 
 const ADS=[
- {n:"Reconocimiento + invitación al LIVE",pct:40,sol:2000,col:"#B0894E",d:"Anuncios de video con ganchos que ya funcionan (educativo, “real vs. falso”, historia de las hermanas). Objetivo: alcance y tráfico a perfil/LIVE. CTA a WhatsApp o recordatorio de LIVE.",kpi:"CPM bajo · espectadores LIVE · mensajes iniciados"},
- {n:"Mensajes (WhatsApp) con producto héroe",pct:30,sol:1500,col:"#8F6C36",d:"Campaña de Mensajes con la línea Dimensiones y Curved Heart + asesoría personalizada. Es el formato que mejor convierte hoy.",kpi:"Costo por mensaje · conversaciones · cierres asistidos"},
- {n:"Retargeting (web, IG/FB, abandonos)",pct:15,sol:750,col:"#C9A86A",d:"Re-impactar a quien vio la web, interactuó o dejó el carrito, con cupón canjeable en LIVE/WhatsApp.",kpi:"Frecuencia (<3) · CTR · ROAS asistido"},
- {n:"Conversión web (construir el canal)",pct:10,sol:500,col:"#6F7E54",d:"Catálogo/ventas hacia la web para empezar a despegar del LIVE y volverla un canal medible.",kpi:"Compras web · costo por compra"},
- {n:"Look-a-Like Top 50 / compradoras",pct:5,sol:250,col:"#B5764F",d:"Público similar a las mejores clientas persona natural (60% de la venta B2C). Hoy subutilizado.",kpi:"Nuevos compradores · CPA"}
+ {n:"Principal (70%): Ventas Web y Mensajes",pct:70,sol:3500,col:"#8F6C36",d:"Campaña orientada 100% a la conversión. Dirigimos tráfico a la landing page / catálogo para compras directas y usamos anuncios de 'Clic para enviar mensaje' en WhatsApp para cierres asistidos.",kpi:"Costo por mensaje · Costo por compra · ROAS"},
+ {n:"Secundario (20%): Localizado y Lives",pct:20,sol:1000,col:"#B0894E",d:"Anuncios segmentados geográficamente (ej. Miraflores/San Isidro) para mover el Showroom, y promoción activa de las transmisiones en vivo para generar comunidad.",kpi:"Espectadores LIVE · Visitas a Showroom"},
+ {n:"Terciario (10%): Reconocimiento y Tráfico",pct:10,sol:500,col:"#C9A86A",d:"Campañas de bajo costo para atraer nuevas miradas, alimentar la parte superior del embudo y engrosar las listas de retargeting.",kpi:"Alcance · CPM · Clics"}
 ];
 
 const METHODS=[
@@ -265,33 +274,72 @@ const PLAN=[
    ["Armar catálogo PDF por categoría para enviar al instante por WhatsApp","Comercial"],
    ["Configurar cupones por categoría (SETPAPA20, RITUAL30…) para medir cada campaña","Web"],
    ["Ordenar WhatsApp: respuestas guardadas, lista de difusión segmentada + Top 50 aparte","Ventas"],
-   ["Reestructurar Meta Ads según el reparto de S/5.000","Ads"],
+   ["Configurar Meta Ads Business Manager y píxeles según nuevo embudo","Ads"],
    ["Redactar el guion base de ventas (los 3 métodos) y capacitar al equipo","Ventas"],
    ["Botón flotante de WhatsApp + corregir alt text de productos en la web","Web"]
  ]},
- {fase:"02",t:"Activación",dias:"Días 16–30",foco:"Encender los canales y subir el ticket.",tasks:[
+ {fase:"02",t:"Activación Estratégica",dias:"Días 16–30",foco:"Encender los canales y subir el ticket.",tasks:[
+   ["Encendido masivo de campañas (70% Conversión / 20% Localizado / 10% Tráfico)","Ads"],
    ["Lanzar campañas por categoría (Arma tu Set, Carga tu Cuarzo, Noche de Cuarzos)","Comercial"],
    ["Calendario de contenido 70/30 con CTA a LIVE/WhatsApp en cada pieza","Contenido"],
    ["Activar reseñas en la web y recolectar testimonios/UGC de Crystalitas","Web"],
    ["Flujos de WhatsApp/email: bienvenida y carrito abandonado","Ads"],
    ["Activar showroom Dasso: evento experiencial + geo-ads radio San Isidro","Showroom"],
-   ["Optimizar Google Business Profile del showroom (fotos, horario, reseñas)","Showroom"],
    ["Subir el ancla del anillo héroe a la franja S/290–340 con relato de pieza de autor","Comercial"],
    ["Empaque de marca + tarjeta de intención de la piedra en cada pedido","Comercial"]
  ]},
- {fase:"03",t:"Escala y medición",dias:"Días 31–45",foco:"Escalar lo que funciona y fidelizar.",tasks:[
+ {fase:"03",t:"Escala y Medición",dias:"Días 31–45",foco:"Escalar lo que funciona y fidelizar.",tasks:[
    ["Escalar los anuncios con mejor ROAS asistido; pausar los flojos","Ads"],
+   ["Lanzar Campañas de Retargeting web para cierre de venta","Ads"],
    ["Club VIP Top 50: preventa exclusiva y atención preferente","Ventas"],
    ["Tablero semanal de ventas por canal y producto","Datos"],
    ["Medir ROAS real con el etiquetado de origen y recalibrar presupuesto","Datos"],
-   ["Ajustar el proceso de ventas según objeciones reales recogidas","Ventas"],
    ["Reactivar clientas dormidas por WhatsApp con novedad + intención","Ventas"],
    ["Definir metas y calendario del mes siguiente con aprendizajes","Comercial"]
  ]}
 ];
+
+// Datos Dinámicos del Gantt 45 Días
+const GANTT_TASKS = [
+  {lbl: "Auditoría Web y UX", start: 1, end: 7, col: "var(--marron2)"},
+  {lbl: "Estrategia Precios y Catálogo", start: 2, end: 8, col: "var(--oro-osc)"},
+  {lbl: "Estrategia Ads & Contenidos", start: 5, end: 12, col: "var(--oro)"},
+  {lbl: "Setup Meta Ads y WhatsApp", start: 10, end: 15, col: "var(--marron)"},
+  {lbl: "Lanzamiento Fuerte (70/10)", start: 16, end: 21, col: "var(--prop)"},
+  {lbl: "Campañas por Categorías", start: 20, end: 28, col: "var(--oro-cla)"},
+  {lbl: "Activación Evento Showroom", start: 22, end: 28, col: "var(--ahora)"},
+  {lbl: "Retargeting y Flujos WhatsApp", start: 28, end: 35, col: "var(--marron2)"},
+  {lbl: "Club VIP Top 50", start: 31, end: 38, col: "var(--oro-osc)"},
+  {lbl: "Escala de Ads (Mejor ROAS)", start: 35, end: 45, col: "var(--prop)"},
+  {lbl: "Análisis Global y Recalibración", start: 40, end: 45, col: "var(--marron)"}
+];
 </script>
 
 <script>
+/* ============================ HTML GANTT BUILDER ============================ */
+let ganttHtml = '<div class="gantt-container"><div class="gantt">';
+ganttHtml += '<div class="gantt-hdr gantt-hdr-first" style="grid-row: 1 / 3; grid-column: 1">Estrategia / Canal</div>';
+
+// Phase Headers
+ganttHtml += `<div class="gantt-phase" style="grid-row: 1; grid-column: 2 / 17; background:var(--hueso2); border-radius:6px 0 0 0;">Fase 1: Cimientos (Días 1-15)</div>`;
+ganttHtml += `<div class="gantt-phase" style="grid-row: 1; grid-column: 17 / 32; background:var(--beige);">Fase 2: Activación (Días 16-30)</div>`;
+ganttHtml += `<div class="gantt-phase" style="grid-row: 1; grid-column: 32 / 47; background:var(--beige2); border-radius:0 6px 0 0; border-right:none;">Fase 3: Escala (Días 31-45)</div>`;
+
+// Days Headers
+for(let i=1; i<=45; i++) {
+    ganttHtml += `<div class="gantt-hdr" style="grid-row: 2; grid-column: ${i+1}; border-bottom:1px solid var(--linea); border-right:1px solid var(--hueso2);">${i}</div>`;
+}
+
+// Tasks Rows
+let row = 3;
+GANTT_TASKS.forEach(t => {
+    ganttHtml += `<div class="gantt-row-lbl" style="grid-row: ${row}; grid-column: 1">${t.lbl}</div>`;
+    // El column en CSS Grid empieza en 1. Nuestro día 1 es la columna 2. Entonces start+1. El end es exclusivo en grid-column, entonces end+2.
+    ganttHtml += `<div class="gantt-bar" style="grid-row: ${row}; grid-column: ${t.start + 1} / ${t.end + 2}; background: ${t.col}" title="Días ${t.start}-${t.end}">${t.start}-${t.end}</div>`;
+    row++;
+});
+ganttHtml += '</div></div>';
+
 /* ============================ RENDER ============================ */
 const C=document.getElementById('content');
 const S={}; // section nodes
@@ -320,7 +368,7 @@ sec('inicio',`
      <ul class="list ok">
        <li class="editable">Navega por el menú; cada sección es una arista de la estrategia.</li>
        <li class="editable">En “Estrategias”, usa el botón <b>Ahora ⟷ Propuesta</b> para comparar.</li>
-       <li class="editable">En “Plan de 45 días”, marca tareas y mira avanzar el progreso.</li>
+       <li class="editable">En “Plan de 45 días”, visualiza el Gantt general y marca las tareas para medir el progreso real.</li>
        <li class="editable">Arriba a la derecha, <b>Editar textos</b> te deja cambiar cualquier texto; los cambios quedan en <b>Historial</b>.</li>
      </ul>
    </div>
@@ -453,12 +501,12 @@ sec('web',`
 
 /* ADS */
 sec('ads',`
- <div class="hdr"><div class="eyebrow">Performance</div><h1 class="editable">Meta Ads · presupuesto S/ 5.000</h1>
- <p class="lead editable">Reparto mensual orientado a alimentar el LIVE y construir canales medibles. Meta subreporta el ROAS (la venta en LIVE es off-platform), por eso el norte son mensajes, espectadores de LIVE y venta asistida medida por etiquetado de origen. Haz clic en cada bloque.</p></div>
+ <div class="hdr"><div class="eyebrow">Performance de Inversión</div><h1 class="editable">Meta Ads · Embudo Optimizado</h1>
+ <p class="lead editable">Presupuesto redistribuido estratégicamente: **Principalmente Ventas Web y Mensajes (70%)**, seguido de **Live y Localizado (20%)**, y alimentando con **Reconocimiento y Tráfico (10%)**. Haz clic en cada bloque.</p></div>
  <div class="bar" id="adsBar"></div>
  <div class="chips" id="adsChips"></div>
  <div class="card" id="adsDetail"></div>
- <div class="callout" style="margin-top:16px"><div class="eyebrow">Meta</div><p class="editable" style="margin:0">ROAS combinado ≥ 5x medido con etiquetado de origen · frecuencia &lt; 3 para evitar fatiga · refrescar 2–3 creativos por semana.</p></div>
+ <div class="callout" style="margin-top:16px"><div class="eyebrow">Meta</div><p class="editable" style="margin:0">Priorizar la conversión directa evita que el presupuesto se diluya en likes. ROAS combinado objetivo ≥ 5x medido con etiquetado de origen · frecuencia &lt; 3.</p></div>
 `);
 
 /* SHOWROOM */
@@ -493,11 +541,15 @@ sec('ventas',`
  <div class="card" id="clientDetail"></div>
 `);
 
-/* PLAN */
+/* PLAN (GANTT 45 DÍAS) */
 sec('plan',`
- <div class="hdr"><div class="eyebrow">Ejecución realista</div><h1 class="editable">Plan de acción · 45 días</h1>
- <p class="lead editable">Tres fases de 15 días para subir ventas y volverse omnicanal sin depender del LIVE. Marca cada tarea: el progreso se actualiza solo.</p></div>
- <div class="card" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;align-items:center"><b>Progreso general</b><span id="progTxt" class="pill">0%</span></div><div class="prog"><i id="progBar"></i></div></div>
+ <div class="hdr"><div class="eyebrow">Plan de Acción & Monitoreo 360°</div><h1 class="editable">Diagrama de Gantt · 45 Días</h1>
+ <p class="lead editable">Visión cronológica del desarrollo omnicanal. Desliza a la derecha para ver cómo todas las estrategias (UX, Ads, Comercial, Showroom) se interconectan en las 3 fases a lo largo de los 45 días.</p></div>
+
+ <!-- GANTT VISUAL DINÁMICO 45 DÍAS -->
+ ${ganttHtml}
+
+ <div class="card" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;align-items:center"><b>Progreso General del Plan</b><span id="progTxt" class="pill">0%</span></div><div class="prog"><i id="progBar"></i></div></div>
  <div id="phases"></div>
 `);
 
@@ -534,19 +586,14 @@ document.getElementById('webRows').innerHTML=WEB_ISSUES.map(w=>`
 document.getElementById('adsBar').innerHTML=ADS.map((a,i)=>`<span style="flex:${a.pct};background:${a.col}" onclick="adsTab(${i})" title="${a.n}">${a.pct}%</span>`).join('');
 document.getElementById('adsChips').innerHTML=ADS.map((a,i)=>`<button class="chip ${i==0?'on':''}" onclick="adsTab(${i},this)">${a.n.split('(')[0]}</button>`).join('');
 function adsTab(i,el){document.querySelectorAll('#adsChips .chip').forEach((c,k)=>c.classList.toggle('on',k==i));const a=ADS[i];
- document.getElementById('adsDetail').innerHTML=`<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:baseline"><h3 style="color:${a.col}">${a.n}</h3><div class="pill" style="font-size:20px">S/ ${a.sol.toLocaleString('es-PE')} · ${a.pct}%</div></div><p class="editable" style="margin-top:8px">${a.d}</p><div class="eyebrow" style="margin-top:8px">KPIs</div><p class="mini editable" style="margin:0">${a.kpi}</p>`;}
+ document.getElementById('adsDetail').innerHTML=`<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:baseline"><h3 style="color:${a.col}">${a.n}</h3><div class="pill" style="font-size:20px">S/ ${a.sol.toLocaleString('es-PE')} · ${a.pct}%</div></div><p class="editable" style="margin-top:8px">${a.d}</p><div class="eyebrow" style="margin-top:8px">KPIs Clave</div><p class="mini editable" style="margin:0">${a.kpi}</p>`;}
 adsTab(0);
 // methods
 document.getElementById('methodChips').innerHTML=METHODS.map((m,i)=>`<button class="chip ${i==0?'on':''}" onclick="methodTab(${i},this)">${i+1}. ${m.nom}</button>`).join('');
 function methodTab(i,el){document.querySelectorAll('#methodChips .chip').forEach((c,k)=>c.classList.toggle('on',k==i));const m=METHODS[i];
  document.getElementById('methodDetail').innerHTML=`<div class="eyebrow">Método ${i+1} · mejor para: ${m.mejor}</div><h3 class="editable">${m.nom}</h3><p class="editable" style="font-style:italic;color:var(--marron2)">${m.idea}</p><ol style="padding-left:18px;margin:8px 0 0">${m.pasos.map(p=>`<li class="editable" style="margin-bottom:6px">${p}</li>`).join('')}</ol>`;}
 methodTab(0);
-// clients
-document.getElementById('clientChips').innerHTML=CLIENTS.map((c,i)=>`<button class="chip ${i==0?'on':''}" onclick="clientTab(${i},this)">${c.t}</button>`).join('');
-function clientTab(i,el){document.querySelectorAll('#clientChips .chip').forEach((c,k)=>c.classList.toggle('on',k==i));const c=CLIENTS[i];
- document.getElementById('clientDetail').innerHTML=`<div class="grid g3"><div><div class="eyebrow">Método recomendado</div><b class="editable">${c.m}</b></div><div><div class="eyebrow" style="color:var(--prop)">Hacer</div><span class="editable">${c.hacer}</span></div><div><div class="eyebrow" style="color:var(--ahora)">Evitar</div><span class="editable">${c.evitar}</span></div></div><hr class="div"><div class="eyebrow">Objeción típica → respuesta</div><p class="editable" style="margin:0">${c.obj}</p>`;}
-clientTab(0);
-// plan
+// plan Checklist
 let TASKS=[];
 document.getElementById('phases').innerHTML=PLAN.map((p,pi)=>`
  <div class="phase">
