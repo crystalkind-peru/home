@@ -1,489 +1,603 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taller de Vision Board | Lou Botanicals & CrystalKind</title>
-    
-    <!-- Fuentes Google -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-    
-    <!-- CSS de Swiper para carruseles -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'brand-white': '#FFFFFF',
-                        'brand-beige': '#F7F4F0',
-                        'brand-beigeDark': '#E8E1D5',
-                        'brand-black': '#1A1A1A',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Ajustes específicos para ocultar scrollbars pero permitir scroll si es necesario */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #F7F4F0; }
-        ::-webkit-scrollbar-thumb { background: #E8E1D5; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #d3c9b5; }
-        
-        .pulse-text {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .5; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CrystalKind · Panel de Estrategia Omnicanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --hueso:#FAF6EE; --hueso2:#F4EDDF; --beige:#EFE4D0; --beige2:#E6D7BD; --linea:#E0D2B8;
+  --oro:#B0894E; --oro-osc:#8F6C36; --oro-cla:#C9A86A; --oro-pal:#E7D6B2;
+  --marron:#4A3A26; --marron2:#7A6A52; --blanco:#FFFFFF;
+  --ahora:#B5764F; --ahora-bg:#F6E7DA; --prop:#6F7E54; --prop-bg:#E8EBDD;
+  --sombra:0 12px 34px -18px rgba(74,58,38,.34); --sombra-s:0 4px 14px -8px rgba(74,58,38,.3);
+  --rad:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--hueso);color:var(--marron);font-family:'Jost',system-ui,sans-serif;font-weight:400;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.08;margin:0;color:var(--marron)}
+p{margin:0 0 .7em}
+a{color:var(--oro-osc)}
+.eyebrow{font-family:'Jost';font-weight:600;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--oro);margin-bottom:10px}
+.facet{color:var(--oro-cla)}
+/* layout */
+.app{display:flex;min-height:100vh}
+.side{width:262px;flex:none;background:linear-gradient(180deg,#fff, #FBF7EF);border-right:1px solid var(--linea);position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;z-index:30}
+.brandbar{padding:22px 20px 14px;border-bottom:1px solid var(--linea);text-align:center}
+.brandbar img{max-width:170px;width:80%;height:auto;display:block;margin:0 auto 6px}
+.brandbar .sub{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--marron2)}
+.nav{padding:12px 12px 18px;flex:1}
+.nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:0;background:transparent;color:var(--marron2);font-family:'Jost';font-size:13.5px;font-weight:500;padding:10px 12px;border-radius:11px;cursor:pointer;transition:.18s;margin-bottom:2px}
+.nav button:hover{background:var(--hueso2);color:var(--marron)}
+.nav button.on{background:var(--marron);color:#F6ECD8}
+.nav button.on .dot{background:var(--oro-cla)}
+.nav .dot{width:7px;height:7px;border-radius:2px;transform:rotate(45deg);background:var(--beige2);flex:none}
+.nav .grp{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--oro);padding:14px 12px 6px;font-weight:600}
+.main{flex:1;min-width:0}
+.topbar{position:sticky;top:0;display:flex;align-items:center;gap:10px;justify-content:flex-end;padding:12px 26px;background:rgba(250,246,238,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--linea);z-index:25}
+.topbar .crumb{margin-right:auto;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--marron2)}
+.btn{font-family:'Jost';font-weight:500;font-size:13px;border:1px solid var(--linea);background:var(--blanco);color:var(--marron);padding:9px 15px;border-radius:30px;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--oro);box-shadow:var(--sombra-s)}
+.btn.solid{background:var(--marron);color:#F6ECD8;border-color:var(--marron)}
+.btn.solid:hover{background:#5b4830}
+.btn.gold{background:var(--oro);color:#fff;border-color:var(--oro)}
+.btn.gold:hover{background:var(--oro-osc)}
+.btn.on{background:var(--prop);color:#fff;border-color:var(--prop)}
+.badge{background:var(--oro);color:#fff;border-radius:20px;font-size:11px;padding:1px 8px;font-weight:600}
+.wrap{max-width:1080px;margin:0 auto;padding:34px 26px 90px}
+/* sections */
+.section{display:none;animation:fade .4s ease}
+.section.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hdr{margin-bottom:22px}
+.hdr h1{font-size:clamp(30px,4.4vw,46px)}
+.hdr h2{font-size:clamp(25px,3.4vw,36px)}
+.lead{font-size:16.5px;color:var(--marron2);max-width:70ch}
+.card{background:var(--blanco);border:1px solid var(--linea);border-radius:var(--rad);padding:22px;box-shadow:var(--sombra-s)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}}
+/* kpi */
+.kpi{background:linear-gradient(160deg,#fff,#FBF6EC);border:1px solid var(--linea);border-radius:14px;padding:18px;position:relative;overflow:hidden}
+.kpi:before{content:"❖";position:absolute;right:10px;top:6px;color:var(--oro-pal);font-size:26px}
+.kpi .n{font-family:'Cormorant Garamond';font-size:34px;font-weight:700;color:var(--oro-osc);line-height:1}
+.kpi .l{font-size:12.5px;color:var(--marron2);margin-top:4px}
+/* toggle actual/propuesta */
+.switch{display:inline-flex;background:var(--hueso2);border:1px solid var(--linea);border-radius:30px;padding:4px;gap:4px;margin:6px 0 18px}
+.switch button{border:0;background:transparent;font-family:'Jost';font-weight:600;font-size:12.5px;letter-spacing:.04em;padding:8px 16px;border-radius:30px;cursor:pointer;color:var(--marron2)}
+.switch button.on[data-v="ahora"]{background:var(--ahora);color:#fff}
+.switch button.on[data-v="prop"]{background:var(--prop);color:#fff}
+.pane{display:none}.pane.show{display:block;animation:fade .35s}
+.tag{display:inline-block;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.tag.a{background:var(--ahora-bg);color:#9a5a32}
+.tag.p{background:var(--prop-bg);color:#54613c}
+.list{list-style:none;padding:0;margin:0}
+.list li{padding:9px 0 9px 26px;position:relative;border-bottom:1px dashed var(--linea);font-size:14.5px}
+.list li:last-child{border-bottom:0}
+.list li:before{content:"◆";position:absolute;left:4px;top:9px;color:var(--oro-cla);font-size:10px}
+.list.x li:before{content:"✕";color:var(--ahora)}
+.list.ok li:before{content:"✓";color:var(--prop)}
+/* chips / tabs */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 18px}
+.chip{border:1px solid var(--linea);background:#fff;border-radius:30px;padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;transition:.16s;color:var(--marron2)}
+.chip:hover{border-color:var(--oro)}
+.chip.on{background:var(--marron);color:#F6ECD8;border-color:var(--marron)}
+/* table */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--linea)}
+th{font-family:'Jost';font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--marron2);background:var(--hueso2)}
+tr:hover td{background:#FCF9F2}
+.pill{font-weight:600;color:var(--oro-osc)}
+/* product cards */
+.prod{background:#fff;border:1px solid var(--linea);border-radius:14px;overflow:hidden;text-align:center;transition:.2s}
+.prod:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
+.prod .ph{aspect-ratio:1;background:var(--hueso2);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.prod .ph img{width:100%;height:100%;object-fit:cover}
+.prod .ph .fb{font-size:40px;color:var(--oro-pal)}
+.prod .b{padding:12px}
+.prod .b .nm{font-size:13px;font-weight:600;min-height:34px}
+.prod .b .pr{color:var(--oro-osc);font-weight:600;margin-top:3px}
+/* meta ads bar */
+.bar{height:30px;border-radius:8px;display:flex;overflow:hidden;border:1px solid var(--linea);margin:6px 0 16px}
+.bar span{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;cursor:pointer;transition:.18s}
+/* checklist */
+.phase{border:1px solid var(--linea);border-radius:14px;overflow:hidden;margin-bottom:16px;background:#fff}
+.phase>.h{display:flex;align-items:center;gap:12px;padding:15px 18px;background:var(--hueso2);cursor:pointer}
+.phase>.h .num{font-family:'Cormorant Garamond';font-size:30px;font-weight:700;color:var(--oro);line-height:1}
+.phase>.h h3{font-size:21px}
+.phase>.h .meta{margin-left:auto;font-size:12px;color:var(--marron2)}
+.tasks{padding:6px 18px 14px}
+.task{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--linea)}
+.task:last-child{border-bottom:0}
+.task input{margin-top:3px;width:18px;height:18px;accent-color:var(--oro);flex:none;cursor:pointer}
+.task .t{font-size:14px}
+.task.done .t{text-decoration:line-through;color:var(--marron2);opacity:.7}
+.task .ch{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--oro-osc);background:var(--oro-pal);border-radius:20px;padding:2px 9px;margin-left:6px}
+.prog{height:9px;background:var(--hueso2);border-radius:20px;overflow:hidden;margin:4px 0 0}
+.prog>i{display:block;height:100%;background:linear-gradient(90deg,var(--oro-cla),var(--oro));width:0;transition:.4s}
+/* foda */
+.foda{cursor:pointer;border-left:4px solid var(--oro)}
+.foda h4{font-size:20px;margin-bottom:4px}
+.foda .more{display:none;margin-top:10px}
+.foda.open .more{display:block;animation:fade .3s}
+.foda .hint{font-size:11px;color:var(--oro);letter-spacing:.1em;text-transform:uppercase}
+/* edit mode */
+body.editing .editable{outline:1.5px dashed var(--oro-cla);outline-offset:3px;border-radius:4px;cursor:text;transition:.15s}
+body.editing .editable:hover{background:#FFFBF0}
+body.editing .editable:focus{outline:2px solid var(--oro);background:#FFFBF0}
+.editnote{display:none;position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--marron);color:#F6ECD8;padding:10px 20px;border-radius:30px;font-size:13px;z-index:60;box-shadow:var(--sombra)}
+body.editing .editnote{display:block;animation:fade .3s}
+.callout{background:linear-gradient(150deg,#FBF4E6,#F4E7CC);border:1px solid var(--beige2);border-radius:14px;padding:18px 20px}
+.callout .eyebrow{margin-bottom:6px}
+.note{font-size:12.5px;color:var(--marron2);font-style:italic}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:820px){.split{grid-template-columns:1fr}}
+.mini{font-size:12px;color:var(--marron2)}
+/* mobile nav */
+.mtoggle{display:none}
+@media(max-width:860px){
+  .side{position:fixed;left:-280px;transition:.25s;box-shadow:var(--sombra)}
+  .side.open{left:0}
+  .mtoggle{display:inline-flex}
+  .wrap{padding:24px 16px 80px}
+}
+.scrim{display:none;position:fixed;inset:0;background:rgba(74,58,38,.4);z-index:28}
+.scrim.on{display:block}
+hr.div{border:0;border-top:1px solid var(--linea);margin:26px 0}
+.severity{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:20px}
+.sev-alta{background:#F6DAD0;color:#9a3a22}.sev-media{background:#F6E7CB;color:#8a6a22}.sev-baja{background:#E2EBD6;color:#566b3a}
+</style>
 </head>
-<body class="bg-brand-beige text-brand-black font-sans antialiased selection:bg-brand-beigeDark">
-
-    <!-- Encabezado con Logos -->
-    <header class="bg-brand-white py-6 border-b border-brand-beigeDark sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-6 flex items-center justify-center gap-6 md:gap-8">
-            <!-- Logo Lou Botanicals (con mix-blend-multiply para quitar el fondo blanco) -->
-            <img src="https://www.loubotanicals.pe/img/logo-17474148271.jpg" alt="Lou Botanicals" class="h-16 md:h-20 mix-blend-multiply object-contain">
-            
-            <div class="h-10 w-[1px] bg-brand-beigeDark"></div>
-            
-            <!-- Logo CrystalKind (tamaño reducido para igualar el peso visual) -->
-            <img src="https://www.crystalkindperu.com/img/cms/Home/LOGO%20CRYSTALKIND%20CURVAS.png" alt="CrystalKind" class="h-4 md:h-5 object-contain">
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="py-12 md:py-20 px-6 text-center max-w-3xl mx-auto">
-        <span class="inline-block py-1 px-3 border border-brand-black rounded-full text-xs uppercase tracking-widest mb-6">Nueva Experiencia Especial</span>
-        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-brand-black leading-tight mb-6">
-            Taller de Vision Board <br> <span class="italic font-light">& Alineación de Metas</span>
-        </h1>
-        <p class="text-lg md:text-xl text-gray-600 mb-8 font-light">
-            Una mañana para desconectarte de la rutina, trabajar tus metas y regalarte un espacio de bienestar absoluto.
-        </p>
-        
-        <!-- Alerta de Cupos -->
-        <div class="inline-flex items-center gap-2 bg-brand-black text-brand-white px-5 py-3 rounded-full mb-10 shadow-lg">
-            <svg class="w-5 h-5 pulse-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span class="font-medium text-sm md:text-base pulse-text">Últimos 17 cupos disponibles</span>
-        </div>
-
-        <!-- Contador Regresivo -->
-        <div class="grid grid-cols-4 gap-2 md:gap-4 max-w-lg mx-auto bg-brand-white p-6 rounded-2xl shadow-sm border border-brand-beigeDark">
-            <div class="flex flex-col items-center">
-                <span id="days" class="font-serif text-3xl md:text-4xl text-brand-black">00</span>
-                <span class="text-xs text-gray-500 uppercase tracking-wide mt-1">Días</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <span id="hours" class="font-serif text-3xl md:text-4xl text-brand-black">00</span>
-                <span class="text-xs text-gray-500 uppercase tracking-wide mt-1">Horas</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <span id="minutes" class="font-serif text-3xl md:text-4xl text-brand-black">00</span>
-                <span class="text-xs text-gray-500 uppercase tracking-wide mt-1">Minutos</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <span id="seconds" class="font-serif text-3xl md:text-4xl text-brand-black">00</span>
-                <span class="text-xs text-gray-500 uppercase tracking-wide mt-1">Segundos</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Detalles e Información -->
-    <section class="bg-brand-white py-16 px-6 border-y border-brand-beigeDark">
-        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            
-            <!-- Qué Incluye -->
-            <div>
-                <h2 class="font-serif text-3xl mb-8">¿Qué incluye la experiencia?</h2>
-                <ul class="space-y-5">
-                    <li class="flex items-start gap-4">
-                        <svg class="w-6 h-6 text-brand-black shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                        <span class="text-gray-700 leading-relaxed">Masterclass de Vision Board y Alineación de Metas.</span>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <svg class="w-6 h-6 text-brand-black shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span class="text-gray-700 leading-relaxed">Limpieza y masaje facial revitalizante.</span>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <svg class="w-6 h-6 text-brand-black shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                        <span class="text-gray-700 leading-relaxed">Experiencia energética de cuarzos con CrystalKind.</span>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <svg class="w-6 h-6 text-brand-black shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                        <span class="text-gray-700 leading-relaxed">Masajes corporales relajantes.</span>
-                    </li>
-                    <li class="flex items-start gap-4">
-                        <svg class="w-6 h-6 text-brand-black shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
-                        <span class="text-gray-700 leading-relaxed">Sorteos, descuentos exclusivos y sorpresas durante el evento.</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Información Práctica y Mapa -->
-            <div class="bg-brand-beige p-8 rounded-2xl">
-                <h3 class="font-serif text-2xl mb-6">Detalles del Evento</h3>
-                <div class="space-y-4 mb-8">
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        <span class="text-brand-black font-medium">Sábado 27 de Junio</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <span class="text-brand-black font-medium">10:00 a. m.</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                        <span class="text-brand-black font-medium">Hotel Dazzler Miraflores</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path></svg>
-                        <span class="text-brand-black font-medium">Inscripción: S/ 29.90</span>
-                    </div>
-                </div>
-                <!-- Mapa Google Iframe -->
-                <div class="w-full h-48 rounded-xl overflow-hidden border border-brand-beigeDark shadow-sm">
-                    <iframe 
-                        src="https://maps.google.com/maps?q=Hotel+Dazzler+Miraflores&t=&z=15&ie=UTF8&iwloc=&output=embed" 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Carrusel de Videos -->
-    <section class="py-16 px-6">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="font-serif text-3xl text-center mb-4">Inspiración Visual</h2>
-            <p class="text-center text-gray-600 mb-10">Mira un poco de lo que vivimos en nuestros encuentros.</p>
-            
-            <div class="swiper tiktok-swiper pb-12">
-                <div class="swiper-wrapper">
-                    <!-- TikTok 4 (CrystalKind) AHORA DE PRIMERO -->
-                    <div class="swiper-slide flex justify-center">
-                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@crystalkindperu/video/7619086022722211085" data-video-id="7619086022722211085" style="max-width: 605px;min-width: 325px;" > <section> </section> </blockquote>
-                    </div>
-                    <!-- TikTok 1 -->
-                    <div class="swiper-slide flex justify-center">
-                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@loubotanicals/video/7642862790864309511" data-video-id="7642862790864309511" style="max-width: 605px;min-width: 325px;" > <section> </section> </blockquote>
-                    </div>
-                    <!-- TikTok 2 -->
-                    <div class="swiper-slide flex justify-center">
-                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@loubotanicals/video/7643235727777500423" data-video-id="7643235727777500423" style="max-width: 605px;min-width: 325px;" > <section> </section> </blockquote>
-                    </div>
-                    <!-- TikTok 3 (CrystalKind) -->
-                    <div class="swiper-slide flex justify-center">
-                        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@crystalkindperu/video/7504058078799744302" data-video-id="7504058078799744302" style="max-width: 605px;min-width: 325px;" > <section> </section> </blockquote>
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Reseñas de Google -->
-    <section class="bg-brand-white py-16 px-6 border-y border-brand-beigeDark">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="font-serif text-3xl text-center mb-12">Lo que dicen de nosotros</h2>
-            
-            <div class="swiper reviews-swiper pb-12">
-                <div class="swiper-wrapper">
-                    <!-- Reseña 1 -->
-                    <div class="swiper-slide bg-brand-beige p-6 rounded-xl border border-brand-beigeDark">
-                        <div class="flex items-center gap-2 mb-3">
-                            <div class="flex text-black">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                            </div>
-                            <span class="text-xs text-gray-500 font-medium">Hace 2 semanas</span>
-                        </div>
-                        <p class="text-sm text-gray-700 italic">"Me encantó la experiencia de limpieza facial de Lou Botanicals. Súper relajante, mi piel quedó hermosa y la atención fue de primera."</p>
-                        <p class="mt-4 text-xs font-semibold text-brand-black">- Mariana C.</p>
-                    </div>
-                    <!-- Reseña 2 -->
-                    <div class="swiper-slide bg-brand-beige p-6 rounded-xl border border-brand-beigeDark">
-                        <div class="flex items-center gap-2 mb-3">
-                            <div class="flex text-black">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                            </div>
-                            <span class="text-xs text-gray-500 font-medium">Hace 1 mes</span>
-                        </div>
-                        <p class="text-sm text-gray-700 italic">"Los cuarzos de CrystalKind tienen una energía muy especial. Fui a su último evento y salí renovada. ¡Recomendadísimo!"</p>
-                        <p class="mt-4 text-xs font-semibold text-brand-black">- Lucía R.</p>
-                    </div>
-                    <!-- Reseña 3 -->
-                    <div class="swiper-slide bg-brand-beige p-6 rounded-xl border border-brand-beigeDark">
-                        <div class="flex items-center gap-2 mb-3">
-                            <div class="flex text-black">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                            </div>
-                            <span class="text-xs text-gray-500 font-medium">Hace 2 meses</span>
-                        </div>
-                        <p class="text-sm text-gray-700 italic">"Una fusión perfecta. La masterclass me ayudó a poner en claro mis metas del año y los masajes de Lou Botanicals fueron el cierre ideal."</p>
-                        <p class="mt-4 text-xs font-semibold text-brand-black">- Daniela M.</p>
-                    </div>
-                    <!-- Reseña 4 -->
-                    <div class="swiper-slide bg-brand-beige p-6 rounded-xl border border-brand-beigeDark">
-                        <div class="flex items-center gap-2 mb-3">
-                            <div class="flex text-black">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                            </div>
-                            <span class="text-xs text-gray-500 font-medium">Hace 3 meses</span>
-                        </div>
-                        <p class="text-sm text-gray-700 italic">"Es un espacio súper seguro y hermoso para conectar contigo misma. Las chicas de ambas marcas son lo máximo. Volvería a ir."</p>
-                        <p class="mt-4 text-xs font-semibold text-brand-black">- Sofía P.</p>
-                    </div>
-                    <!-- Reseña 5 -->
-                    <div class="swiper-slide bg-brand-beige p-6 rounded-xl border border-brand-beigeDark">
-                        <div class="flex items-center gap-2 mb-3">
-                            <div class="flex text-black">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                            </div>
-                            <span class="text-xs text-gray-500 font-medium">Hace 4 meses</span>
-                        </div>
-                        <p class="text-sm text-gray-700 italic">"Los productos botánicos huelen delicioso y la ambientación con los cuarzos te deja una paz tremenda. Tienen que ir."</p>
-                        <p class="mt-4 text-xs font-semibold text-brand-black">- Carolina G.</p>
-                    </div>
-                    <!-- Reseña 6 -->
-                    <div class="swiper-slide bg-brand-beige p-6 rounded-xl border border-brand-beigeDark">
-                        <div class="flex items-center gap-2 mb-3">
-                            <div class="flex text-black">
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                                <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                            </div>
-                            <span class="text-xs text-gray-500 font-medium">Hace 5 meses</span>
-                        </div>
-                        <p class="text-sm text-gray-700 italic">"Increíble evento. La organización, los regalos, el sorteo... Todo estuve de maravilla. Me llevé mi tablero de metas lleno de ilusión."</p>
-                        <p class="mt-4 text-xs font-semibold text-brand-black">- Valentina T.</p>
-                    </div>
-                </div>
-                <!-- Paginación opcional de swiper -->
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección Formulario -->
-    <section class="py-16 px-6" id="registro">
-        <div class="max-w-md mx-auto bg-brand-white p-8 md:p-10 rounded-2xl shadow-sm border border-brand-beigeDark relative overflow-hidden">
-            <!-- Adorno sutil en el fondo del formulario -->
-            <div class="absolute -top-16 -right-16 w-32 h-32 bg-brand-beige rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-            
-            <h2 class="font-serif text-3xl text-center mb-2 relative z-10">Separa tu cupo</h2>
-            <p class="text-center text-gray-500 text-sm mb-8 relative z-10">Completa tus datos y finaliza tu registro por WhatsApp.</p>
-            
-            <form id="registrationForm" class="space-y-5 relative z-10" onsubmit="submitForm(event)">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre y Apellido</label>
-                    <input type="text" id="name" required class="w-full px-4 py-3 bg-brand-beige border border-brand-beigeDark rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-black transition-colors" placeholder="Tu nombre">
-                </div>
-                
-                <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Celular</label>
-                    <input type="tel" id="phone" required class="w-full px-4 py-3 bg-brand-beige border border-brand-beigeDark rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-black transition-colors" placeholder="Tu número de celular">
-                </div>
-                
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
-                    <input type="email" id="email" required class="w-full px-4 py-3 bg-brand-beige border border-brand-beigeDark rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-black transition-colors" placeholder="tucorreo@ejemplo.com">
-                </div>
-
-                <div>
-                    <label for="payment" class="block text-sm font-medium text-gray-700 mb-1">Medio de Pago Preferido</label>
-                    <select id="payment" required class="w-full px-4 py-3 bg-brand-beige border border-brand-beigeDark rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-black transition-colors appearance-none">
-                        <option value="" disabled selected>Selecciona una opción</option>
-                        <option value="Yape / Plin">Yape / Plin</option>
-                        <option value="Transferencia Bancaria">Transferencia Bancaria</option>
-                    </select>
-                </div>
-
-                <!-- Monto fijo a pagar -->
-                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 flex items-center justify-between mt-2">
-                    <span class="text-sm text-gray-600">Inscripción total:</span>
-                    <span class="font-serif text-lg text-brand-black font-semibold">S/ 29.90</span>
-                </div>
-
-                <button type="submit" class="w-full bg-brand-black text-brand-white py-4 rounded-lg font-medium tracking-wide hover:bg-gray-800 transition-colors mt-4 shadow-md flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                    Confirmar mi cupo por S/ 29.90
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-brand-white py-8 border-t border-brand-beigeDark text-center pb-28 md:pb-8">
-        <p class="text-sm text-gray-400 font-light">&copy; 2026 Lou Botanicals & CrystalKind. Todos los derechos reservados.</p>
-    </footer>
-
-    <!-- Barra Flotante de Registro (Persuasiva) -->
-    <div class="fixed bottom-0 left-0 w-full bg-brand-white border-t border-brand-beigeDark shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)] z-50 p-4 md:px-6 flex items-center justify-between gap-4">
-        <div class="hidden md:block">
-            <p class="text-sm font-medium text-brand-black">Taller de Vision Board</p>
-            <p class="text-xs text-gray-500">Sábado 27 de Junio • S/ 29.90</p>
-        </div>
-        <div class="flex-1 md:flex-none flex flex-col md:flex-row items-center gap-2 md:gap-6 justify-center">
-            <p class="text-xs md:text-sm font-semibold text-red-600 pulse-text">¡Últimos 17 cupos!</p>
-            <a href="#registro" class="block w-full md:w-auto bg-brand-black text-brand-white px-8 py-3 rounded-full text-sm font-medium hover:bg-gray-800 transition shadow-lg text-center">
-                Separar mi cupo ahora
-            </a>
-        </div>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="side" id="side">
+    <div class="brandbar">
+      <img src="https://www.crystalkindperu.com/img/cms/Home/LOGO%20CRYSTALKIND%20CURVAS.png" alt="CrystalKind" onerror="this.outerHTML='<div style=&quot;font-family:Cormorant Garamond;font-size:26px;font-weight:700;color:#8F6C36&quot;>CrystalKind</div>'">
+      <div class="sub">Panel de Estrategia · 45 días</div>
     </div>
+    <nav class="nav" id="nav"></nav>
+  </aside>
+  <div class="scrim" id="scrim" onclick="closeNav()"></div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script async src="https://www.tiktok.com/embed.js"></script>
-    <script>
-        // Lógica de Swiper (Carruseles)
-        document.addEventListener('DOMContentLoaded', function () {
-            // Carrusel de TikTok
-            const tiktokSwiper = new Swiper('.tiktok-swiper', {
-                slidesPerView: 1,
-                spaceBetween: 20,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                breakpoints: {
-                    640: { slidesPerView: 2, spaceBetween: 20 },
-                    1024: { slidesPerView: 3, spaceBetween: 30 },
-                }
-            });
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <button class="btn mtoggle" onclick="openNav()">☰ Menú</button>
+      <span class="crumb" id="crumb">Inicio</span>
+      <button class="btn" id="histBtn" onclick="go('historial')">Historial <span class="badge" id="histCount">0</span></button>
+      <button class="btn gold" id="editBtn" onclick="toggleEdit()">✎ Editar textos</button>
+    </div>
+    <div class="wrap" id="content"><!-- sections injected --></div>
+  </div>
+</div>
+<div class="editnote">Modo edición activo · haz clic en cualquier texto resaltado para cambiarlo. Cada cambio queda en el Historial.</div>
 
-            // Carrusel de Reseñas
-            const reviewsSwiper = new Swiper('.reviews-swiper', {
-                slidesPerView: 1,
-                spaceBetween: 20,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                breakpoints: {
-                    640: { slidesPerView: 2, spaceBetween: 20 },
-                    1024: { slidesPerView: 3, spaceBetween: 30 },
-                }
-            });
-        });
+<script>
+/* ============================ DATA ============================ */
+const NAV=[
+ {g:"Panorama"},
+ {id:"inicio",label:"Inicio"},
+ {id:"marca",label:"La marca"},
+ {id:"diagnostico",label:"Interno vs Externo"},
+ {g:"Estrategias (hoy vs propuesta)"},
+ {id:"e-marca",label:"Estrategia de marca"},
+ {id:"e-comunicacion",label:"Comunicación"},
+ {id:"e-comercial",label:"Comercial y precios"},
+ {id:"contenido",label:"Contenido"},
+ {g:"Canales"},
+ {id:"web",label:"Web · UX/CX"},
+ {id:"ads",label:"Meta Ads · S/5.000"},
+ {id:"showroom",label:"Showroom Dasso"},
+ {id:"ventas",label:"Proceso de ventas"},
+ {g:"Ejecución"},
+ {id:"plan",label:"Plan de 45 días"},
+ {id:"historial",label:"Historial de edición"}
+];
 
-        // Lógica del Formulario a WhatsApp
-        function submitForm(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
-            const payment = document.getElementById('payment').value;
+const PRODUCTS=[
+ {nm:"Anillo Yvonne · Cuarzo Rosa",pr:"S/ 215–340",img:"https://www.crystalkindperu.com/6301-home_default/anillo-yvonne-.jpg",link:"https://www.crystalkindperu.com/c/anillos-34"},
+ {nm:"Pulsera Ojo de Tigre",pr:"S/ 95–139",img:"https://www.crystalkindperu.com/4856-home_default/pulsera-de-ojo-de-tigre.jpg",link:"https://www.crystalkindperu.com/c/pulseras-35"},
+ {nm:"Dijes y Collares de cuarzo",pr:"S/ 106–488",img:"",link:"https://www.crystalkindperu.com/c/dijes-y-collares-36"},
+ {nm:"Línea héroe · Dimensiones",pr:"Proteger sin descuento",img:"",link:"https://www.crystalkindperu.com/c/anillos-34"}
+];
 
-            // Formato de mensaje
-            const message = `¡Hola! Quiero separar un cupo para el Taller de Vision Board del sábado 27 de junio.%0A%0A*Mis datos:*%0A- Nombre: ${name}%0A- Celular: ${phone}%0A- Correo: ${email}%0A- Pago preferido: ${payment}%0A%0A*Monto a pagar:* S/ 29.90%0A%0A¡Por favor, confírmenme los datos de la cuenta para realizar el pago!`;
-            
-            // NUMERO DE WHATSAPP ACTUALIZADO
-            const waLink = `https://wa.me/51934059023?text=${message}`;
-            
-            // Abrir WhatsApp en nueva pestaña
-            window.open(waLink, '_blank');
-        }
+const FODA=[
+ {t:"Fortalezas",c:"var(--prop)",items:["Relato auténtico de dos hermanas · comunidad “Crystalitas”","Cuarzo genuino vs. imitación: diferencial defendible","TikTok 89.7K + Instagram 38K, con virales de cientos de miles","Línea héroe (Dimensiones, Curved Heart) que se vende sola","Showroom propio en San Isidro + presencia en Ripley"]},
+ {t:"Oportunidades",c:"var(--oro-osc)",items:["Omnicanal real: hoy 62% depende del LIVE","Subir el ticket (S/282) con sets e intención","Prueba social y reseñas (hoy casi nulas)","SEO y contenido educativo indexable sin explotar","Geolocalización del showroom en zona de alto poder adquisitivo"]},
+ {t:"Debilidades",c:"var(--ahora)",items:["Dependencia de la presencia en vivo de las hermanas","Web PrestaShop con fricción y SEO con fugas","Anillo héroe subvaluado frente a pares premium","Sin proceso de ventas formal ni capacitación","Facebook desaprovechado (solo espejo)"]},
+ {t:"Amenazas",c:"var(--marron2)",items:["Nicho saturado y fácil de imitar","Competidores informales que rebajan precio","Algoritmos: el alcance orgánico es volátil","Meta subreporta el ROAS real (venta en LIVE off-platform)","Clientas entrenadas a esperar descuentos"]}
+];
 
-        // Lógica del Contador (Hacia el 27 de Junio a las 10:00 AM)
-        // Ojo: Estoy asumiendo Junio del año actual o próximo.
-        const targetDate = new Date("June 27, 2026 10:00:00").getTime();
+const PRICING=[
+ {arq:"Premium de diseño",marcas:"Sissai · Ilaria · Anagrama",rango:"Pulsera S/160–520 · Anillo S/320–550",precio:"Firme, sin descuento",voz:"Diseño, colecciones, cultura, retail físico"},
+ {arq:"Energético / comunidad",marcas:"CrystalKind · Aura Cuarzos · Mística",rango:"Pulsera S/95–139 · Anillo S/215–340",precio:"Mid, promos por categoría",voz:"Sanación, intención, LIVE, comunidad"},
+ {arq:"Regalo con descuento",marcas:"Argentaria · Azzia",rango:"Pulsera ~S/127 (de S/159)",precio:"Precio tachado, rebajas",voz:"Empaque regalo, reseñas, envío gratis bajo"},
+ {arq:"Commodity",marcas:"Feibi · marketplaces",rango:"S/20–60",precio:"Guerra de precio",voz:"“Protección y buena suerte”, sin marca"}
+];
 
-        const countdownInterval = setInterval(() => {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
+const WEB_ISSUES=[
+ {t:"Texto alternativo (alt) vacío en productos",s:"alta",d:"Se pierde posicionamiento en Google Imágenes (clave en joyería) y accesibilidad. Cargar alt descriptivo por pieza."},
+ {t:"Sin reseñas ni prueba social",s:"alta",d:"La ficha no muestra valoraciones. Activar reseñas y testimonios de WhatsApp sube conversión y confianza."},
+ {t:"Envío gratis recién desde S/399",s:"alta",d:"Umbral alto para captar primera compra (ticket actual S/282). Probar un beneficio de bienvenida y reservar el monto alto para el bundle."},
+ {t:"Cierre real en WhatsApp, web sin integrarlo",s:"media",d:"Falta botón flotante de WhatsApp visible y catálogo descargable. La web debe empujar al chat, no competir con él."},
+ {t:"Tema PrestaShop desactualizado",s:"media",d:"Botones de Google+ (red muerta), comparador de productos sin sentido en joyería emocional. Limpiar y modernizar."},
+ {t:"Variantes con # no indexan + duplicados",s:"media",d:"Mismo producto en varias rutas y combinaciones con fragmento #. Revisar canonical y URLs limpias."},
+ {t:"Home satura producto, poca marca",s:"baja",d:"Decenas de miniaturas diluyen el “lujo”. Una home más editorial con el relato de las hermanas reforzaría posicionamiento."}
+];
 
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById('days').innerText = "00";
-                document.getElementById('hours').innerText = "00";
-                document.getElementById('minutes').innerText = "00";
-                document.getElementById('seconds').innerText = "00";
-                return;
-            }
+const ADS=[
+ {n:"Reconocimiento + invitación al LIVE",pct:40,sol:2000,col:"#B0894E",d:"Anuncios de video con ganchos que ya funcionan (educativo, “real vs. falso”, historia de las hermanas). Objetivo: alcance y tráfico a perfil/LIVE. CTA a WhatsApp o recordatorio de LIVE.",kpi:"CPM bajo · espectadores LIVE · mensajes iniciados"},
+ {n:"Mensajes (WhatsApp) con producto héroe",pct:30,sol:1500,col:"#8F6C36",d:"Campaña de Mensajes con la línea Dimensiones y Curved Heart + asesoría personalizada. Es el formato que mejor convierte hoy.",kpi:"Costo por mensaje · conversaciones · cierres asistidos"},
+ {n:"Retargeting (web, IG/FB, abandonos)",pct:15,sol:750,col:"#C9A86A",d:"Re-impactar a quien vio la web, interactuó o dejó el carrito, con cupón canjeable en LIVE/WhatsApp.",kpi:"Frecuencia (<3) · CTR · ROAS asistido"},
+ {n:"Conversión web (construir el canal)",pct:10,sol:500,col:"#6F7E54",d:"Catálogo/ventas hacia la web para empezar a despegar del LIVE y volverla un canal medible.",kpi:"Compras web · costo por compra"},
+ {n:"Look-a-Like Top 50 / compradoras",pct:5,sol:250,col:"#B5764F",d:"Público similar a las mejores clientas persona natural (60% de la venta B2C). Hoy subutilizado.",kpi:"Nuevos compradores · CPA"}
+];
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+const METHODS=[
+ {id:"m1",nom:"La Guía Consultiva",mejor:"Clienta nueva, indecisa o de web",idea:"No vendes una joya: ayudas a elegir una intención. La decisión la nombra ella.",
+  pasos:["Bienvenida cálida + pregunta de diagnóstico: “¿qué quieres atraer o soltar ahora — calma, amor propio, prosperidad?”","Escuchas y reflejas: conectas su necesidad con la piedra adecuada.","Recomiendas con autoridad: “para eso, el cuarzo rosa… y trabajamos solo con cuarzo genuino.”","Muestras 2 opciones (héroe + accesible) para anclar precio.","Cierre suave: “te la aparto si quieres pensarlo / te mando el catálogo y me cuentas.”"]},
+ {id:"m2",nom:"La Anfitriona del LIVE",mejor:"Compra por impulso en transmisión",idea:"Energía, comunidad y escasez honesta. El LIVE es un evento, no una vitrina.",
+  pasos:["Saludas por nombre a las que llegan (“¡bienvenida, Crystalita!”).","Cuentas la intención de cada pieza mientras la muestras puesta.","Prueba social en vivo: “a varias les voló esta”.","Escasez real: “quedan 2 de esta piedra” (solo si es verdad).","Cierre por DM/WhatsApp inmediato: “escríbeme ‘la quiero’ y te la aparto.”"]},
+ {id:"m3",nom:"La Relación VIP",mejor:"Recurrente, Top 50 y cliente de alto valor",idea:"No es una venta más: es cuidar una relación. Trato preferente y memoria.",
+  pasos:["Reconoces su historia: “me encantó cómo combinaste tu última pieza.”","Preventa y acceso anticipado a lo nuevo antes que el público.","Recomendación por afinidad (qué le faltó a su set).","Detalle de fidelización: nota escrita, regalo de ritual, empaque especial.","Seguimiento post-venta: “¿cómo te va con tu cuarzo?” → próxima compra natural."]}
+];
 
-            // Añadir un cero a la izquierda si es menor de 10
-            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
-            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
-            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
-            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
-        }, 1000);
+const CLIENTS=[
+ {t:"Nueva",m:"La Guía Consultiva",hacer:"Generar confianza, diagnosticar, educar sin abrumar.",evitar:"Saltar al precio o presionar.",obj:"“No sé cuál elegir” → diagnóstico por intención."},
+ {t:"Recurrente",m:"La Relación VIP",hacer:"Reconocer su historia, ofrecer preventa y afinidad.",evitar:"Tratarla como desconocida.",obj:"“Ya tengo varias” → set/complemento y novedad exclusiva."},
+ {t:"Difícil / “pesada”",m:"La Guía Consultiva + objeciones",hacer:"Validar, dar pruebas (autenticidad, reseñas), paciencia.",evitar:"Discutir o ceder precio del héroe.",obj:"“Está caro / ¿es real?” → valor, cuarzo genuino, garantía, prueba social."},
+ {t:"De LIVE",m:"La Anfitriona del LIVE",hacer:"Ritmo, escasez honesta, cierre inmediato por DM.",evitar:"Dejar enfriar la decisión.",obj:"“Lo pienso” → apartado por tiempo limitado real."},
+ {t:"De Web",m:"La Guía Consultiva",hacer:"Responder rápido, llevar a WhatsApp, asesoría de talla.",evitar:"Dejar la consulta sin respuesta.",obj:"“¿Me queda?” → guía de talla + cambios fáciles."},
+ {t:"De Showroom",m:"La Relación VIP",hacer:"Experiencia sensorial, probar puesto, contar el ritual.",evitar:"Atención fría tipo mostrador.",obj:"“Solo estoy mirando” → invitar a sentir la energía de la pieza."}
+];
 
-        // Lógica de Cupos Dinámicos (Reduce 2 por día)
-        function updateDynamicSpots() {
-            // Fecha base: 19 de Junio 2026 (empieza en 17 cupos)
-            const baseDate = new Date("June 19, 2026 00:00:00").getTime();
-            const initialSpots = 17;
-            const decreasePerDay = 2;
-            
-            const now = new Date().getTime();
-            const distance = now - baseDate;
-            
-            // Calculamos días transcurridos
-            let daysPassed = Math.floor(distance / (1000 * 60 * 60 * 24));
-            if (daysPassed < 0) daysPassed = 0; // Evitar errores si se abre antes de la fecha base
-            
-            let currentSpots = initialSpots - (daysPassed * decreasePerDay);
-            
-            // Límite: Nunca bajará de 2 cupos para no "cerrar" las ventas visualmente
-            if (currentSpots < 2) {
-                currentSpots = 2;
-            }
+const PLAN=[
+ {fase:"01",t:"Cimientos omnicanal",dias:"Días 1–15",foco:"Ordenar la casa para dejar de depender del LIVE.",tasks:[
+   ["Etiquetar el origen de cada venta (LIVE / WhatsApp / Web / Showroom) para medir ROAS real","Datos"],
+   ["Definir política de precios: línea héroe SIN descuento; promos solo por categoría","Comercial"],
+   ["Armar catálogo PDF por categoría para enviar al instante por WhatsApp","Comercial"],
+   ["Configurar cupones por categoría (SETPAPA20, RITUAL30…) para medir cada campaña","Web"],
+   ["Ordenar WhatsApp: respuestas guardadas, lista de difusión segmentada + Top 50 aparte","Ventas"],
+   ["Reestructurar Meta Ads según el reparto de S/5.000","Ads"],
+   ["Redactar el guion base de ventas (los 3 métodos) y capacitar al equipo","Ventas"],
+   ["Botón flotante de WhatsApp + corregir alt text de productos en la web","Web"]
+ ]},
+ {fase:"02",t:"Activación",dias:"Días 16–30",foco:"Encender los canales y subir el ticket.",tasks:[
+   ["Lanzar campañas por categoría (Arma tu Set, Carga tu Cuarzo, Noche de Cuarzos)","Comercial"],
+   ["Calendario de contenido 70/30 con CTA a LIVE/WhatsApp en cada pieza","Contenido"],
+   ["Activar reseñas en la web y recolectar testimonios/UGC de Crystalitas","Web"],
+   ["Flujos de WhatsApp/email: bienvenida y carrito abandonado","Ads"],
+   ["Activar showroom Dasso: evento experiencial + geo-ads radio San Isidro","Showroom"],
+   ["Optimizar Google Business Profile del showroom (fotos, horario, reseñas)","Showroom"],
+   ["Subir el ancla del anillo héroe a la franja S/290–340 con relato de pieza de autor","Comercial"],
+   ["Empaque de marca + tarjeta de intención de la piedra en cada pedido","Comercial"]
+ ]},
+ {fase:"03",t:"Escala y medición",dias:"Días 31–45",foco:"Escalar lo que funciona y fidelizar.",tasks:[
+   ["Escalar los anuncios con mejor ROAS asistido; pausar los flojos","Ads"],
+   ["Club VIP Top 50: preventa exclusiva y atención preferente","Ventas"],
+   ["Tablero semanal de ventas por canal y producto","Datos"],
+   ["Medir ROAS real con el etiquetado de origen y recalibrar presupuesto","Datos"],
+   ["Ajustar el proceso de ventas según objeciones reales recogidas","Ventas"],
+   ["Reactivar clientas dormidas por WhatsApp con novedad + intención","Ventas"],
+   ["Definir metas y calendario del mes siguiente con aprendizajes","Comercial"]
+ ]}
+];
+</script>
 
-            // Actualizamos los textos en el HTML
-            const heroSpots = document.getElementById('hero-spots');
-            const floatingSpots = document.getElementById('floating-spots');
-            
-            if (heroSpots) heroSpots.innerText = `Últimos ${currentSpots} cupos disponibles`;
-            if (floatingSpots) floatingSpots.innerText = `¡Últimos ${currentSpots} cupos!`;
-        }
-        
-        // Ejecutar al cargar la página
-        updateDynamicSpots();
-    </script>
+<script>
+/* ============================ RENDER ============================ */
+const C=document.getElementById('content');
+const S={}; // section nodes
+
+function sec(id,html){const d=document.createElement('section');d.className='section';d.id='sec-'+id;d.dataset.section=id;d.innerHTML=html;C.appendChild(d);S[id]=d;}
+
+/* INICIO */
+sec('inicio',`
+ <div class="hdr">
+   <div class="eyebrow">Panel interno + externo · CrystalKind</div>
+   <h1 class="editable">De depender del LIVE a vender en todos los canales</h1>
+   <p class="lead editable">Esto es un tablero de estrategia para CrystalKind, marca peruana de joyería de cuarzo creada por dos hermanas. Reúne el análisis interno y externo, y para cada frente compara lo que se hace hoy con lo que se puede hacer, dentro de un plan realista de 45 días para subir ventas y volverse omnicanal. Usa el menú de la izquierda; cada bloque es interactivo.</p>
+ </div>
+ <div class="grid g4" style="margin-bottom:18px">
+   <div class="kpi"><div class="n">S/ 86,859</div><div class="l editable">Ventas de mayo (con IGV)</div></div>
+   <div class="kpi"><div class="n">62%</div><div class="l editable">se cierra en LIVE</div></div>
+   <div class="kpi"><div class="n">S/ 282</div><div class="l editable">ticket promedio</div></div>
+   <div class="kpi"><div class="n">89.7K</div><div class="l editable">seguidores TikTok</div></div>
+ </div>
+ <div class="split">
+   <div class="card"><div class="eyebrow">Punto de partida real</div>
+     <p class="editable">Hoy CrystalKind se apoya en tres herramientas: <b>Meta Ads</b>, la <b>web</b> y la venta por <b>mensajes y LIVE</b>. Funciona, pero concentra el riesgo: casi dos de cada tres soles dependen de que las hermanas transmitan en vivo.</p>
+     <p class="editable">El objetivo de este panel es construir los otros canales (web, WhatsApp estructurado, showroom y retargeting) para que la venta no se caiga cuando no hay LIVE, sin perder el alma de la marca.</p>
+   </div>
+   <div class="card callout"><div class="eyebrow">Cómo usar este panel</div>
+     <ul class="list ok">
+       <li class="editable">Navega por el menú; cada sección es una arista de la estrategia.</li>
+       <li class="editable">En “Estrategias”, usa el botón <b>Ahora ⟷ Propuesta</b> para comparar.</li>
+       <li class="editable">En “Plan de 45 días”, marca tareas y mira avanzar el progreso.</li>
+       <li class="editable">Arriba a la derecha, <b>Editar textos</b> te deja cambiar cualquier texto; los cambios quedan en <b>Historial</b>.</li>
+     </ul>
+   </div>
+ </div>
+`);
+
+/* MARCA */
+sec('marca',`
+ <div class="hdr"><div class="eyebrow">Quién es · para alguien que no la conoce</div><h1 class="editable">La marca</h1>
+ <p class="lead editable">Joyería de cuarzo genuino con un relato de sanación, amor propio y transformación, creada por dos hermanas. No vende adorno: vende intención. Su comunidad se llama “Crystalitas”.</p></div>
+ <div class="grid g3" style="margin-bottom:16px">
+   <div class="card"><div class="eyebrow">Propuesta</div><h3 class="editable">Lujo accesible en cuarzo</h3><p class="editable">Plata 950 y enchape de oro 18k con cuarzo natural. Cada pieza lleva la intención de su piedra. Precio mid-premium: por encima del cuarzo informal, debajo de la joyería fina.</p></div>
+   <div class="card"><div class="eyebrow">Diferencial</div><h3 class="editable">Cuarzo genuino, no imitación</h3><p class="editable">Su bandera: trabajar con cuarzo auténtico y proveedores formales frente a un nicho lleno de plástico y cuarzo pintado. Es lo que justifica el precio y construye confianza.</p></div>
+   <div class="card"><div class="eyebrow">Comunidad</div><h3 class="editable">Las “Crystalitas”</h3><p class="editable">Audiencia femenina fiel. La pulsera es la única categoría unisex; el resto se centra en la mujer que se regala o regala. La cercanía 1:1 es parte del producto.</p></div>
+ </div>
+ <div class="card"><div class="eyebrow">Vitrina (imágenes reales de su web)</div>
+   <div class="grid g4" id="prodGrid" style="margin-top:8px"></div>
+   <p class="mini" style="margin-top:12px">Anillos S/215–340 · Pulseras S/95–139 · Dijes y collares S/106–488. El anillo héroe (línea Dimensiones) es el motor: ~la mitad de la venta y nunca debe descontarse.</p>
+ </div>
+`);
+
+/* DIAGNOSTICO */
+sec('diagnostico',`
+ <div class="hdr"><div class="eyebrow">Análisis 360°</div><h1 class="editable">Interno vs. externo</h1>
+ <p class="lead editable">El interno son sus números y canales; el externo, el mercado y los cuatro tipos de competidor en cuarzo. Haz clic en cada cuadrante para ver el detalle.</p></div>
+ <div class="grid g2" id="fodaGrid"></div>
+ <div class="callout" style="margin-top:18px"><div class="eyebrow">Lectura</div>
+ <p class="editable" style="margin:0">Su carril —cuarzo genuino + sanación + comunidad + LIVE— es único y defendible. La jugada no es bajar precio para parecerse a los informales, sino subir valor percibido para acercarse al respeto de precio del premium, manteniendo el alma espiritual.</p></div>
+`);
+
+/* helper para secciones estrategia con toggle */
+function strat(id,eyebrow,title,lead,ahora,prop,extra=''){
+ sec(id,`
+ <div class="hdr"><div class="eyebrow">${eyebrow}</div><h1 class="editable">${title}</h1><p class="lead editable">${lead}</p></div>
+ <div class="switch" data-switch="${id}">
+   <button data-v="ahora" class="on" onclick="sw('${id}','ahora')">● Ahora</button>
+   <button data-v="prop" onclick="sw('${id}','prop')">✦ Propuesta</button>
+ </div>
+ <div class="pane show" data-pane="${id}-ahora">
+   <span class="tag a">Lo que se hace hoy</span>
+   <div class="card" style="margin-top:10px"><ul class="list x">${ahora.map(x=>`<li class="editable">${x}</li>`).join('')}</ul></div>
+ </div>
+ <div class="pane" data-pane="${id}-prop">
+   <span class="tag p">Lo que se puede hacer · acción inmediata</span>
+   <div class="card" style="margin-top:10px"><ul class="list ok">${prop.map(x=>`<li class="editable">${x}</li>`).join('')}</ul></div>
+ </div>
+ ${extra}
+ `);
+}
+
+strat('e-marca','Estrategia · marca','Estrategia de marca',
+ 'Cómo se construye la marca hoy y cómo reforzarla sin perder su esencia.',
+ ["Relato fuerte de las dos hermanas, pero disperso y poco sistematizado.","“Lujo” declarado que choca con precios de gama media.","Showroom y presencia en Ripley casi sin comunicar.","Sin manual de marca: tono y estilo dependen de quién publique.","Anillo héroe vendido por debajo de su valor."],
+ ["Definir posicionamiento claro: “lujo accesible con significado”, no “lujo” a secas.","Convertir la historia de las hermanas en eje narrativo recurrente.","Comunicar los sellos de confianza: cuarzo genuino, formal (S.A.C.), Ripley, showroom.","Crear mini guía de marca (tono, do/don’t, paleta) para todo el equipo.","Tratar la línea Dimensiones como pieza de autor: precio firme y relato propio."]);
+
+strat('e-comunicacion','Estrategia · comunicación','Estrategia de comunicación',
+ 'Qué se comunica hoy y cómo ordenarlo por canal, con foco geolocalizado.',
+ ["TikTok es el motor (89.7K) pero se publica sin un sistema claro.","Instagram (38K) sólido; Facebook casi abandonado (solo espejo).","Mensaje fuerte de autenticidad, pero sin calendario ni pilares fijos.","CTA inconsistente: muchos contenidos no invitan al LIVE/WhatsApp.","Showroom San Isidro sin estrategia local."],
+ ["Roles por canal: TikTok=alcance, IG=comunidad+LIVE, FB=regalo+local+eventos.","Pilares fijos: educativo, real vs. falso, historia de las hermanas, fecha energética, producto con relato.","Cada pieza cierra con CTA a LIVE o WhatsApp (sin excepción).","Geolocalizar: contenido y ads con foco San Isidro/Miraflores para el showroom; nacional para online.","Reactivar Facebook para público de regalo y eventos del showroom."],
+ `<div class="callout" style="margin-top:18px"><div class="eyebrow">Comunicación geolocalizada</div>
+   <div class="grid g3" style="margin-top:6px">
+     <div><b>TikTok</b><p class="mini editable">Alcance nacional + virales. Etiquetar Lima/Perú, usar tendencias locales, llevar a perfil/LIVE.</p></div>
+     <div><b>Instagram</b><p class="mini editable">Comunidad y LIVE de cierre. Stickers de ubicación San Isidro, ads radio showroom.</p></div>
+     <div><b>Facebook</b><p class="mini editable">Público mayor/regalo. Grupos de San Isidro/Lima, eventos del showroom, Marketplace.</p></div>
+   </div></div>`);
+
+strat('e-comercial','Estrategia · comercial','Estrategia comercial y de precios',
+ 'Cómo vende y cobra hoy vs. una arquitectura de precio y promoción más rentable.',
+ ["≈62% de la venta depende del LIVE; web solo 6%.","Descuentos también en anillos (hoy hay ofertas -10%), tocando el héroe.","Envío gratis recién en S/399: fricción para captar.","Sin prueba social que venda cuando no hay LIVE.","Promos sin medición de origen → no se sabe qué funciona."],
+ ["Arquitectura de 2 niveles: héroe con precio firme; promos solo en categorías secundarias.","Subir el ancla del anillo héroe a S/290–340 (dentro de su propio rango).","Anclaje: mostrar primero el héroe para que lo demás se sienta accesible.","Construir reseñas/UGC como activo de venta permanente.","Bundles e intención para subir el ticket; medir cada campaña por cupón."],
+ `<div class="card" style="margin-top:18px"><div class="eyebrow">Mapa de precios en cuarzo · Perú</div>
+   <div style="overflow-x:auto"><table><thead><tr><th>Arquetipo</th><th>Marcas</th><th>Rango</th><th>Precio</th><th>Cómo comunica</th></tr></thead>
+   <tbody id="pricingRows"></tbody></table></div>
+   <p class="mini" style="margin-top:8px">Sissai cobra casi el doble por la misma plata + cuarzo y nunca descuenta. CrystalKind tiene el relato para sostener más precio en su héroe.</p></div>`);
+
+/* CONTENIDO */
+sec('contenido',`
+ <div class="hdr"><div class="eyebrow">Visualización de contenido</div><h1 class="editable">Qué contenido genera acción (y cuál no)</h1>
+ <p class="lead editable">Basado en señales públicas de sus redes y en los datos de venta. El contenido enciende el alcance; el LIVE cierra. La clave: que todo lo que enciende termine en una invitación a comprar.</p></div>
+ <div class="chips" id="contChips">
+   <button class="chip on" onclick="contTab('si',this)">✓ Lo que SÍ funciona</button>
+   <button class="chip" onclick="contTab('no',this)">✕ Lo que NO genera nada</button>
+ </div>
+ <div id="cont-si" class="card">
+   <ul class="list ok">
+     <li class="editable"><b>Storytelling de identidad con tendencia</b> — su video de presentación con formato “lo que creen que vendo vs. lo que vendo”: 54.4K me gusta.</li>
+     <li class="editable"><b>Educativo accionable</b> — “cómo intencionar/cuidar tu cuarzo”: 18.5K me gusta. Se guarda y se comparte.</li>
+     <li class="editable"><b>Real vs. falso / antiimitación</b> — el ángulo más viral de la categoría y su diferencial.</li>
+     <li class="editable"><b>Fechas energéticas</b> — lunas, eclipses, manifestación: picos confiables.</li>
+     <li class="editable"><b>Producto con relato</b> — la intención de la piedra, antes/después, “para quién es”.</li>
+   </ul>
+ </div>
+ <div id="cont-no" class="card" style="display:none">
+   <ul class="list x">
+     <li class="editable"><b>Producto plano sin historia</b> — la pieza sola, sin tensión ni relato (rinde poquísimo).</li>
+     <li class="editable"><b>Preguntas vacías</b> — “comenta tu signo” sin recompensa (su propio post: 47 me gusta).</li>
+     <li class="editable"><b>Promo seca</b> — “aprovecha / nuevo ingreso” sin narrativa; eso vive mejor dentro del LIVE.</li>
+     <li class="editable"><b>Avisos estáticos sin rostro</b> — lo corporativo no compite con video con cara y energía.</li>
+   </ul>
+ </div>
+ <div class="callout" style="margin-top:16px"><div class="eyebrow">Regla</div><p class="editable" style="margin:0">Mezcla 70% contenido que enciende + 30% producto con relato. Mide por negocio, no solo por likes: un viral que no lleva al LIVE o a WhatsApp no generó venta.</p></div>
+`);
+
+/* WEB */
+sec('web',`
+ <div class="hdr"><div class="eyebrow">Auditoría de canal</div><h1 class="editable">Web · análisis UX / CX</h1>
+ <p class="lead editable">La web (PrestaShop) funciona como catálogo, no como punto de cierre. Estos son los hallazgos priorizados por impacto y la estrategia para que sume al omnicanal.</p></div>
+ <div class="grid g4" style="margin-bottom:16px">
+   <div class="kpi"><div class="n">6%</div><div class="l editable">de la venta entra por web</div></div>
+   <div class="kpi"><div class="n">S/399</div><div class="l editable">umbral de envío gratis (alto)</div></div>
+   <div class="kpi"><div class="n">0</div><div class="l editable">reseñas visibles</div></div>
+   <div class="kpi"><div class="n">UX</div><div class="l editable">tema antiguo + fricción</div></div>
+ </div>
+ <div class="card"><div class="eyebrow">Hallazgos priorizados</div><div id="webRows" style="margin-top:6px"></div></div>
+ <div class="split" style="margin-top:16px">
+   <div class="card"><div class="eyebrow">Estrategia UX</div><ul class="list ok">
+     <li class="editable">Botón flotante de WhatsApp visible en toda la web.</li>
+     <li class="editable">Ficha con reseñas, guía de talla y “completa tu ritual”.</li>
+     <li class="editable">Home editorial con el relato de las hermanas + sellos de confianza.</li>
+     <li class="editable">Corregir alt text, canonical y limpiar el tema (quitar Google+/comparador).</li>
+   </ul></div>
+   <div class="card"><div class="eyebrow">Estrategia CX</div><ul class="list ok">
+     <li class="editable">Respuesta < 10 min en WhatsApp (responsable y horario).</li>
+     <li class="editable">Catálogo PDF listo para enviar al instante.</li>
+     <li class="editable">Empaque de marca + tarjeta de intención = experiencia post-compra.</li>
+     <li class="editable">Seguimiento post-venta (“¿cómo te va con tu cuarzo?”).</li>
+   </ul></div>
+ </div>
+`);
+
+/* ADS */
+sec('ads',`
+ <div class="hdr"><div class="eyebrow">Performance</div><h1 class="editable">Meta Ads · presupuesto S/ 5.000</h1>
+ <p class="lead editable">Reparto mensual orientado a alimentar el LIVE y construir canales medibles. Meta subreporta el ROAS (la venta en LIVE es off-platform), por eso el norte son mensajes, espectadores de LIVE y venta asistida medida por etiquetado de origen. Haz clic en cada bloque.</p></div>
+ <div class="bar" id="adsBar"></div>
+ <div class="chips" id="adsChips"></div>
+ <div class="card" id="adsDetail"></div>
+ <div class="callout" style="margin-top:16px"><div class="eyebrow">Meta</div><p class="editable" style="margin:0">ROAS combinado ≥ 5x medido con etiquetado de origen · frecuencia &lt; 3 para evitar fatiga · refrescar 2–3 creativos por semana.</p></div>
+`);
+
+/* SHOWROOM */
+sec('showroom',`
+ <div class="hdr"><div class="eyebrow">Punto de venta</div><h1 class="editable">Showroom Dasso · San Isidro</h1>
+ <p class="lead editable">Un activo premium subutilizado: están en una de las zonas de mayor poder adquisitivo de Lima. Bien usado, el showroom es experiencia de marca y un canal de venta que no depende del algoritmo.</p></div>
+ <div class="split">
+   <div class="card"><span class="tag a">Hoy</span><ul class="list x" style="margin-top:8px">
+     <li class="editable">Abierto de lunes a sábado 10am–8pm, pero sin estrategia local.</li>
+     <li class="editable">Poco tráfico dirigido: no se comunica ni se geolocaliza.</li>
+     <li class="editable">No se aprovecha el perfil de la zona (San Isidro/Miraflores).</li>
+   </ul></div>
+   <div class="card"><span class="tag p">Propuesta · inmediato</span><ul class="list ok" style="margin-top:8px">
+     <li class="editable">Geo-ads en radio cerrado (San Isidro/Miraflores) “drive-to-store”.</li>
+     <li class="editable">Eventos experienciales: cata energética, masterclass de cuarzos, intención de piezas.</li>
+     <li class="editable">Alianzas con yoga/spa/cafés de la zona para captar a la clienta ideal.</li>
+     <li class="editable">Google Business Profile impecable (fotos, reseñas, horario) para “cuarzos cerca de mí”.</li>
+     <li class="editable">Invitar al showroom desde el LIVE: “ven a sentir tu pieza”.</li>
+   </ul></div>
+ </div>
+ <div class="callout" style="margin-top:16px"><div class="eyebrow">Posicionamiento</div><p class="editable" style="margin:0">Convertir el showroom en el “templo” físico de la marca: el lugar donde la experiencia espiritual se vuelve tangible. Eso sube ticket, fideliza y diferencia de cualquier competidor solo-online.</p></div>
+`);
+
+/* VENTAS */
+sec('ventas',`
+ <div class="hdr"><div class="eyebrow">Sin capacitadora · guía lista para usar</div><h1 class="editable">Proceso de ventas · 3 propuestas</h1>
+ <p class="lead editable">Tres métodos que las vendedoras pueden seguir según el tipo de clienta. Primero elige el método; abajo, elige el tipo de clienta y verás el enfoque, qué evitar y cómo manejar objeciones.</p></div>
+ <div class="chips" id="methodChips"></div>
+ <div class="card" id="methodDetail" style="margin-bottom:18px"></div>
+ <div class="eyebrow">Según el tipo de clienta</div>
+ <div class="chips" id="clientChips"></div>
+ <div class="card" id="clientDetail"></div>
+`);
+
+/* PLAN */
+sec('plan',`
+ <div class="hdr"><div class="eyebrow">Ejecución realista</div><h1 class="editable">Plan de acción · 45 días</h1>
+ <p class="lead editable">Tres fases de 15 días para subir ventas y volverse omnicanal sin depender del LIVE. Marca cada tarea: el progreso se actualiza solo.</p></div>
+ <div class="card" style="margin-bottom:16px"><div style="display:flex;justify-content:space-between;align-items:center"><b>Progreso general</b><span id="progTxt" class="pill">0%</span></div><div class="prog"><i id="progBar"></i></div></div>
+ <div id="phases"></div>
+`);
+
+/* HISTORIAL */
+sec('historial',`
+ <div class="hdr"><div class="eyebrow">Trazabilidad</div><h1>Historial de ediciones</h1>
+ <p class="lead">Cada cambio de texto que hagas con el modo edición queda registrado aquí con su antes, después y hora. Se conserva durante esta sesión.</p></div>
+ <div class="card"><div style="display:flex;gap:10px;margin-bottom:10px">
+   <button class="btn" onclick="toggleEdit()">✎ Activar/desactivar edición</button>
+   <button class="btn" onclick="clearHist()">Vaciar historial</button>
+ </div>
+ <div id="histTable"><p class="mini">Aún no hay ediciones. Activa “Editar textos”, cambia cualquier texto resaltado y volverá aquí.</p></div></div>
+`);
+
+/* ---- fill dynamic ---- */
+// productos
+document.getElementById('prodGrid').innerHTML=PRODUCTS.map(p=>`
+ <a class="prod" href="${p.link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">
+  <div class="ph">${p.img?`<img src="${p.img}" alt="${p.nm}" onerror="this.parentNode.innerHTML='<span class=\\'fb\\'>❖</span>'">`:`<span class="fb">❖</span>`}</div>
+  <div class="b"><div class="nm editable">${p.nm}</div><div class="pr editable">${p.pr}</div></div>
+ </a>`).join('');
+// foda
+document.getElementById('fodaGrid').innerHTML=FODA.map((f,i)=>`
+ <div class="card foda" onclick="this.classList.toggle('open')" style="border-left-color:${f.c}">
+   <div style="display:flex;justify-content:space-between;align-items:center"><h4 class="editable" style="color:${f.c}">${f.t}</h4><span class="hint">ver +</span></div>
+   <div class="more"><ul class="list">${f.items.map(x=>`<li class="editable">${x}</li>`).join('')}</ul></div>
+ </div>`).join('');
+// pricing
+document.getElementById('pricingRows').innerHTML=PRICING.map(r=>`<tr><td><b class="editable">${r.arq}</b></td><td class="editable">${r.marcas}</td><td class="editable">${r.rango}</td><td class="editable">${r.precio}</td><td class="editable">${r.voz}</td></tr>`).join('');
+// web issues
+document.getElementById('webRows').innerHTML=WEB_ISSUES.map(w=>`
+ <div class="task"><div style="flex:1"><b class="editable">${w.t}</b> <span class="severity sev-${w.s}">${w.s}</span><div class="mini editable" style="margin-top:3px">${w.d}</div></div></div>`).join('');
+// ads bar + chips
+document.getElementById('adsBar').innerHTML=ADS.map((a,i)=>`<span style="flex:${a.pct};background:${a.col}" onclick="adsTab(${i})" title="${a.n}">${a.pct}%</span>`).join('');
+document.getElementById('adsChips').innerHTML=ADS.map((a,i)=>`<button class="chip ${i==0?'on':''}" onclick="adsTab(${i},this)">${a.n.split('(')[0]}</button>`).join('');
+function adsTab(i,el){document.querySelectorAll('#adsChips .chip').forEach((c,k)=>c.classList.toggle('on',k==i));const a=ADS[i];
+ document.getElementById('adsDetail').innerHTML=`<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:baseline"><h3 style="color:${a.col}">${a.n}</h3><div class="pill" style="font-size:20px">S/ ${a.sol.toLocaleString('es-PE')} · ${a.pct}%</div></div><p class="editable" style="margin-top:8px">${a.d}</p><div class="eyebrow" style="margin-top:8px">KPIs</div><p class="mini editable" style="margin:0">${a.kpi}</p>`;}
+adsTab(0);
+// methods
+document.getElementById('methodChips').innerHTML=METHODS.map((m,i)=>`<button class="chip ${i==0?'on':''}" onclick="methodTab(${i},this)">${i+1}. ${m.nom}</button>`).join('');
+function methodTab(i,el){document.querySelectorAll('#methodChips .chip').forEach((c,k)=>c.classList.toggle('on',k==i));const m=METHODS[i];
+ document.getElementById('methodDetail').innerHTML=`<div class="eyebrow">Método ${i+1} · mejor para: ${m.mejor}</div><h3 class="editable">${m.nom}</h3><p class="editable" style="font-style:italic;color:var(--marron2)">${m.idea}</p><ol style="padding-left:18px;margin:8px 0 0">${m.pasos.map(p=>`<li class="editable" style="margin-bottom:6px">${p}</li>`).join('')}</ol>`;}
+methodTab(0);
+// clients
+document.getElementById('clientChips').innerHTML=CLIENTS.map((c,i)=>`<button class="chip ${i==0?'on':''}" onclick="clientTab(${i},this)">${c.t}</button>`).join('');
+function clientTab(i,el){document.querySelectorAll('#clientChips .chip').forEach((c,k)=>c.classList.toggle('on',k==i));const c=CLIENTS[i];
+ document.getElementById('clientDetail').innerHTML=`<div class="grid g3"><div><div class="eyebrow">Método recomendado</div><b class="editable">${c.m}</b></div><div><div class="eyebrow" style="color:var(--prop)">Hacer</div><span class="editable">${c.hacer}</span></div><div><div class="eyebrow" style="color:var(--ahora)">Evitar</div><span class="editable">${c.evitar}</span></div></div><hr class="div"><div class="eyebrow">Objeción típica → respuesta</div><p class="editable" style="margin:0">${c.obj}</p>`;}
+clientTab(0);
+// plan
+let TASKS=[];
+document.getElementById('phases').innerHTML=PLAN.map((p,pi)=>`
+ <div class="phase">
+   <div class="h" onclick="this.parentNode.querySelector('.tasks').classList.toggle('hide');this.parentNode.querySelector('.tasks').style.display=this.parentNode.querySelector('.tasks').style.display=='none'?'block':'none'">
+     <span class="num">${p.fase}</span><div><h3 class="editable">${p.t}</h3><div class="mini editable">${p.dias} · ${p.foco}</div></div><span class="meta">${p.tasks.length} tareas</span>
+   </div>
+   <div class="tasks">${p.tasks.map((t,ti)=>{const id='t'+pi+'-'+ti;TASKS.push(id);return `<label class="task" id="lab-${id}"><input type="checkbox" onchange="toggleTask('${id}',this)"><span class="t editable">${t[0]}<span class="ch">${t[1]}</span></span></label>`;}).join('')}</div>
+ </div>`).join('');
+function toggleTask(id,el){document.getElementById('lab-'+id).classList.toggle('done',el.checked);updProg();}
+function updProg(){const done=TASKS.filter(id=>document.querySelector('#lab-'+id+' input').checked).length;const pct=Math.round(done/TASKS.length*100);document.getElementById('progBar').style.width=pct+'%';document.getElementById('progTxt').textContent=pct+'%';}
+
+/* content tabs */
+function contTab(v,el){document.querySelectorAll('#contChips .chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');document.getElementById('cont-si').style.display=v=='si'?'block':'none';document.getElementById('cont-no').style.display=v=='no'?'block':'none';}
+
+/* switch ahora/propuesta */
+function sw(id,v){document.querySelectorAll(`[data-switch="${id}"] button`).forEach(b=>b.classList.toggle('on',b.dataset.v==v));
+ document.querySelector(`[data-pane="${id}-ahora"]`).classList.toggle('show',v=='ahora');
+ document.querySelector(`[data-pane="${id}-prop"]`).classList.toggle('show',v=='prop');}
+
+/* ============================ NAV ============================ */
+const navEl=document.getElementById('nav');
+NAV.forEach(n=>{ if(n.g){const d=document.createElement('div');d.className='grp';d.textContent=n.g;navEl.appendChild(d);}
+ else{const b=document.createElement('button');b.dataset.id=n.id;b.innerHTML=`<span class="dot"></span>${n.label}`;b.onclick=()=>go(n.id);navEl.appendChild(b);} });
+function go(id){Object.values(S).forEach(s=>s.classList.remove('show'));S[id].classList.add('show');
+ document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.id==id));
+ const lbl=(NAV.find(n=>n.id==id)||{}).label||'';document.getElementById('crumb').textContent=lbl;
+ window.scrollTo({top:0,behavior:'smooth'});closeNav();}
+function openNav(){document.getElementById('side').classList.add('open');document.getElementById('scrim').classList.add('on');}
+function closeNav(){document.getElementById('side').classList.remove('open');document.getElementById('scrim').classList.remove('on');}
+go('inicio');
+
+/* ============================ EDIT MODE + HISTORY ============================ */
+let editing=false, editHistory=[], _idc=0, _orig={};
+function initEditable(){document.querySelectorAll('.editable').forEach(e=>{ if(!e.dataset.eid){e.dataset.eid='e'+(++_idc);
+   e.addEventListener('focus',()=>{_orig[e.dataset.eid]=e.innerText;});
+   e.addEventListener('blur',()=>{const before=_orig[e.dataset.eid]??'';const after=e.innerText;
+     if(editing && before!==after){const secId=e.closest('[data-section]')?.dataset.section||'—';
+       editHistory.unshift({sec:secId,before,after,t:new Date().toLocaleString('es-PE')});renderHist();}});
+ }});}
+function toggleEdit(){editing=!editing;document.body.classList.toggle('editing',editing);
+ document.getElementById('editBtn').classList.toggle('on',editing);
+ document.getElementById('editBtn').innerHTML=editing?'✓ Listo':'✎ Editar textos';
+ document.querySelectorAll('.editable').forEach(e=>e.contentEditable=editing);}
+function renderHist(){document.getElementById('histCount').textContent=editHistory.length;
+ const el=document.getElementById('histTable');if(!editHistory.length){el.innerHTML='<p class="mini">Aún no hay ediciones.</p>';return;}
+ el.innerHTML='<div style="overflow-x:auto"><table><thead><tr><th>Hora</th><th>Sección</th><th>Antes</th><th>Después</th></tr></thead><tbody>'+
+  editHistory.map(h=>`<tr><td class="mini" style="white-space:nowrap">${h.t}</td><td><span class="ch" style="font-size:9px">${h.sec}</span></td><td class="mini" style="color:var(--ahora)">${escapeHtml(h.before).slice(0,90)}</td><td class="mini" style="color:var(--prop)">${escapeHtml(h.after).slice(0,90)}</td></tr>`).join('')+'</tbody></table></div>';}
+function clearHist(){editHistory=[];renderHist();}
+function escapeHtml(s){return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+initEditable();renderHist();
+window.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav();});
+</script>
 </body>
 </html>
